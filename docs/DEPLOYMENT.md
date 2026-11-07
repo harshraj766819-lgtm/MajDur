@@ -31,3 +31,4 @@ RAZORPAY_WEBHOOK_SECRET="..."
 4. Deploy backend to Render/Railway and attach domain `api.majdur.in`.
 5. Deploy frontend to Vercel and attach domain `majdur.in`.
 6. Configure Razorpay webhook pointing to `https://api.majdur.in/api/payments/webhook`.
+

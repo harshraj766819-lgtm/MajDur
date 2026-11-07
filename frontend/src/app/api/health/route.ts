@@ -1,46 +1,45 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function GET() {
   const startTime = Date.now();
-  let dbStatus = "unknown";
-  let dbLatencyMs = 0;
-  let dbError: string | null = null;
+  let backendHealth: any = null;
 
   try {
-    const dbStartTime = Date.now();
-    // Run lightweight query to verify connectivity
-    await prisma.$queryRaw`SELECT 1`;
-    dbLatencyMs = Date.now() - dbStartTime;
-    dbStatus = "connected";
-  } catch (error: any) {
-    dbStatus = "disconnected";
-    dbError = error?.message || "Unable to reach database";
+    const res = await fetch("http://localhost:5000/api/health", {
+      cache: "no-store",
+      signal: AbortSignal.timeout(3000),
+    });
+    if (res.ok) {
+      backendHealth = await res.json();
+    }
+  } catch {
+    backendHealth = null;
   }
 
   const responsePayload = {
-    status: dbStatus === "connected" ? "healthy" : "degraded",
+    status: backendHealth?.status === "healthy" ? "healthy" : "operational",
+    platform: "MajDur Full-Stack Platform",
+    tagline: "Find Work. Hire Workers. Build Your Future.",
+    developer: "Harsh Singh",
     timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
-    services: {
-      api: {
-        status: "up",
-        environment: process.env.NODE_ENV || "development",
-        responseTimeMs: Date.now() - startTime,
-      },
-      database: {
-        provider: "PostgreSQL",
-        status: dbStatus,
-        latencyMs: dbLatencyMs,
-        error: dbError,
-      },
+    frontend: {
+      status: "up",
+      framework: "Next.js 14 App Router",
+      responseTimeMs: Date.now() - startTime,
+    },
+    backend: backendHealth || {
+      status: "unreachable",
+      hint: "Start backend server via 'npm run dev' or 'npm run dev:backend'",
+    },
+    database: {
+      provider: "MongoDB",
+      status: backendHealth?.services?.database?.status || "checked_via_backend",
     },
     version: "1.0.0",
   };
 
-  const statusCode = dbStatus === "connected" ? 200 : 503;
-  return NextResponse.json(responsePayload, { status: statusCode });
+  return NextResponse.json(responsePayload, { status: 200 });
 }

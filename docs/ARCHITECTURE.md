@@ -60,3 +60,4 @@ flowchart TD
 - **`backend/`**: Encapsulates database access, business rules, token issuance, password hashing, payment webhook validation, real-time message broadcasting, and administrative authorization.
 - **`backend/prisma/`**: Single source of truth for the database schema containing 24 relational models.
 - **`docs/`**: Technical contracts, data dictionaries, security policies, and deployment blueprints.
+

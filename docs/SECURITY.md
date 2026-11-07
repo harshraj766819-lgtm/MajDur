@@ -21,3 +21,4 @@
 - **CORS:** Restricted to verified frontend domains.
 - **Rate Limiting:** Protects `/api/auth/*` and public endpoints against brute force attacks.
 - **Audit Logs:** All sensitive administrative operations are recorded in `AdminAuditLog`.
+

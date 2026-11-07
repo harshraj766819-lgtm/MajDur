@@ -46,3 +46,4 @@ export function errorHandler(
 
   return sendError(res, message, statusCode, code, err.stack);
 }
+

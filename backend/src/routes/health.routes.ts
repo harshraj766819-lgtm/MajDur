@@ -1,6 +1,5 @@
 import { Router, Request, Response } from "express";
 import { prisma } from "../config/prisma";
-import { sendSuccess, sendError } from "../utils/response";
 import { ENV } from "../config/environment";
 
 const router = Router();
@@ -10,15 +9,17 @@ router.get("/health", async (req: Request, res: Response) => {
   let dbStatus = "unknown";
   let dbLatency = 0;
   let dbError: string | null = null;
+  let categoryCount = 0;
 
   try {
     const t0 = Date.now();
-    await prisma.$queryRaw`SELECT 1`;
+    await prisma.$runCommandRaw({ ping: 1 });
+    categoryCount = await prisma.category.count();
     dbLatency = Date.now() - t0;
     dbStatus = "connected";
   } catch (error: any) {
     dbStatus = "disconnected";
-    dbError = error?.message || "PostgreSQL connection failed";
+    dbError = error?.message || "MongoDB connection failed";
   }
 
   const payload = {
@@ -36,9 +37,10 @@ router.get("/health", async (req: Request, res: Response) => {
         responseTimeMs: Date.now() - startTime,
       },
       database: {
-        engine: "PostgreSQL",
+        engine: "MongoDB",
         status: dbStatus,
         latencyMs: dbLatency,
+        activeCategoriesCount: categoryCount,
         error: dbError,
       },
     },

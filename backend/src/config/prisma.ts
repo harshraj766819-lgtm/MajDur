@@ -12,3 +12,4 @@ export const prisma =
   });
 
 if (ENV.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+

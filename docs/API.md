@@ -67,3 +67,4 @@ Returns all active service trades and standard daily rates.
 - `GET /api/admin/dashboard` — Platform overview analytics.
 - `GET /api/admin/users` — User management with search.
 - `PATCH /api/admin/verifications/:id` — Approve or reject worker KYC documents.
+

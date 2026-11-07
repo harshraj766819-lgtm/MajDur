@@ -17,3 +17,4 @@ export const ENV = {
   DEVELOPER: "Harsh Singh",
   APP_NAME: "MajDur",
 };
+

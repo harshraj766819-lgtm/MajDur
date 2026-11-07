@@ -3,13 +3,14 @@
 > **Tagline:** Find Work. Hire Workers. Build Your Future.  
 > **Developer:** Harsh Singh  
 > **Target Market:** India (INR ₹ • Asia/Kolkata • English & Hindi)  
-> **Repository:** `d:\MajDur`
+> **Repository:** `d:\MajDur`  
+> **Database:** MongoDB (Database: `majdur`)
 
 ---
 
 ## 1. Project Overview
 
-**MajDur** is a modern, high-trust Indian blue-collar and skilled trade marketplace connecting homeowners, commercial contractors, and enterprises with verified electricians, plumbers, masons, painters, carpenters, and daily wage labourers.
+**MajDur** is a modern Indian blue-collar and skilled trade marketplace connecting homeowners, commercial contractors, and enterprises with verified electricians, plumbers, masons, painters, carpenters, and daily wage labourers.
 
 ### Key Pillars
 - **Direct Connect:** Connect workers and clients directly without middleman agency commissions.
@@ -23,10 +24,9 @@
 
 - **Frontend:** Next.js 14 App Router, React 18, TypeScript, Tailwind CSS, Framer Motion, Lucide React Icons.
 - **Backend:** Node.js, Express.js, TypeScript, REST API, Socket.IO (Real-time chat), Rate Limiting, Helmet security.
-- **Database & ORM:** PostgreSQL, Prisma ORM (24 normalized models).
+- **Database & ORM:** MongoDB, Prisma ORM (24 normalized collections).
 - **Security:** bcryptjs (password hashing), jsonwebtoken (JWT authentication), Role-Based Access Control (RBAC).
 - **Payment Gateway:** Razorpay (Test mode with server-side signature verification).
-- **Containerization:** Docker & Docker Compose (`docker-compose.yml`).
 
 ---
 
@@ -51,18 +51,17 @@ MAJDUR/
 │   │   ├── sockets/      # Socket.IO real-time chat gateway
 │   │   ├── utils/        # Standard response formats & logging
 │   │   └── server.ts     # Express server entry point
-│   ├── prisma/           # Prisma schema (24 models) & seed script
+│   ├── prisma/           # Prisma MongoDB schema (24 collections) & seed script
 │   └── package.json
 │
 ├── docs/                 # Engineering architecture & API specifications
 │   ├── ARCHITECTURE.md   # System design & topology
 │   ├── API.md            # REST API endpoints & contracts
-│   ├── DATABASE.md       # Schema models, relations & indexes
+│   ├── DATABASE.md       # MongoDB collections, relations & indexes
 │   ├── SECURITY.md       # RBAC, audit logging & privacy compliance
 │   └── DEPLOYMENT.md     # Production deployment runbook
 │
-├── scripts/              # Diagnostic & utility tools
-├── docker-compose.yml    # PostgreSQL container setup
+├── scripts/              # Diagnostic & database verification utilities
 ├── .env.example          # Environment variable template
 └── README.md
 ```
@@ -74,7 +73,8 @@ MAJDUR/
 ### Prerequisites
 - **Node.js:** v18+ (Tested on v24.16.0)
 - **npm:** v9+ (Tested on v11.13.0)
-- **PostgreSQL:** Local service, Docker container, or Cloud URL (Neon/Supabase)
+- **MongoDB:** MongoDB Atlas or local MongoDB server (Database: `majdur`)
+- **MongoDB CLI:** `mongosh` (Installed on `D:\mongosh.exe`)
 
 ### Step 1: Install Dependencies
 ```powershell
@@ -84,16 +84,16 @@ npm --prefix backend install
 npm install
 ```
 
-### Step 2: Database Setup
+### Step 2: Database Setup & Synchronization
+Prisma with MongoDB uses `db push` for collection and index synchronization:
 ```powershell
-# Option A: Start local PostgreSQL using Docker Desktop
-docker compose up -d
-
-# Verify database connection
+# Verify MongoDB connection and collection counts
 npm run db:test
 
-# Push schema and seed initial 30+ trade categories
+# Synchronize Prisma schema with MongoDB collections and indexes
 npm run prisma:push
+
+# Seed default 32 trade categories and Super Admin account
 npm run prisma:seed
 ```
 
@@ -111,7 +111,7 @@ npm run dev:frontend  # Next.js Web Application   -> http://localhost:3000
 
 ## 5. Development Roadmap & Phases
 
-- [x] **Phase 1: Project Foundation & Architecture** (Monorepo, Next.js, Express, Prisma, Docker, UI System, Homepage)
+- [x] **Phase 1: Project Foundation & MongoDB Architecture** (Monorepo, Next.js, Express, Prisma + MongoDB, UI System, Homepage)
 - [ ] **Phase 2: Design System & Theming** (Dark/Gold palette, light theme toggle, responsive layout)
 - [ ] **Phase 3: Homepage Polish** (Categories, testimonials, search engine, FAQs)
 - [ ] **Phase 4: Authentication System** (Customer, Worker, Contractor, Admin, JWT, OTP, RBAC)
