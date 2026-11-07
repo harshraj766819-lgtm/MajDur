@@ -1,0 +1,517 @@
+// MajDur Database Schema
+// Developer: Harsh Singh
+// Platform: MajDur (India's Premier Workforce & Skilled Services Marketplace)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CUSTOMER
+  WORKER
+  CONTRACTOR
+  ADMIN
+}
+
+enum JobType {
+  ONE_TIME
+  RECURRING
+  CONTRACT
+}
+
+enum BudgetType {
+  FIXED
+  HOURLY
+  DAILY
+}
+
+enum JobStatus {
+  DRAFT
+  OPEN
+  APPLICATIONS_CLOSED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum ApplicationStatus {
+  PENDING
+  SHORTLISTED
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
+enum BookingStatus {
+  REQUESTED
+  ACCEPTED
+  REJECTED
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  DISPUTED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+enum VerificationStatus {
+  PENDING
+  IN_REVIEW
+  APPROVED
+  REJECTED
+}
+
+enum ComplaintStatus {
+  OPEN
+  UNDER_INVESTIGATION
+  RESOLVED
+  CLOSED
+}
+
+model User {
+  id                    String                @id @default(cuid())
+  name                  String
+  email                 String?               @unique
+  phone                 String                @unique
+  password              String
+  role                  Role                  @default(CUSTOMER)
+  avatar                String?
+  isPhoneVerified       Boolean               @default(false)
+  isEmailVerified       Boolean               @default(false)
+  isActive              Boolean               @default(true)
+  otpCode               String?
+  otpExpiresAt          DateTime?
+  resetPasswordToken    String?
+  resetPasswordExpires  DateTime?
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+
+  // Profiles
+  customerProfile       CustomerProfile?
+  workerProfile         WorkerProfile?
+  contractorProfile     ContractorProfile?
+
+  // Relations
+  addresses             Address[]
+  postedJobs            Job[]                 @relation("PostedJobs")
+  applications          JobApplication[]      @relation("WorkerApplications")
+  customerBookings      Booking[]             @relation("CustomerBookings")
+  workerBookings        Booking[]             @relation("WorkerBookings")
+  reviewsGiven          Review[]              @relation("ReviewsGiven")
+  reviewsReceived       Review[]              @relation("ReviewsReceived")
+  payments              Payment[]
+  notifications         Notification[]
+  conversationMembers   ConversationMember[]
+  messagesSent          Message[]
+  complaintsFiled       Complaint[]           @relation("ComplaintsFiled")
+  complaintsAgainst     Complaint[]           @relation("ComplaintsAgainst")
+  verificationRequests  VerificationRequest[]
+  adminAuditLogs        AdminAuditLog[]       @relation("AdminLogs")
+
+  @@index([role])
+  @@index([phone])
+  @@index([email])
+}
+
+model CustomerProfile {
+  id             String    @id @default(cuid())
+  userId         String    @unique
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  alternatePhone String?
+  city           String?
+  state          String?
+  pincode        String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model WorkerProfile {
+  id               String         @id @default(cuid())
+  userId           String         @unique
+  user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio              String?        @db.Text
+  dailyRate        Float?
+  hourlyRate       Float?
+  experienceYears  Int            @default(1)
+  category         String         // Primary category slug/name
+  categoryId       String?
+  categoryRef      Category?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  locationCity     String
+  locationState    String
+  locationPincode  String
+  serviceRadiusKm  Int            @default(25)
+  isAvailable      Boolean        @default(true)
+  isVerified       Boolean        @default(false)
+  idProofType      String?        // Aadhaar, Voter ID, PAN
+  idProofUrl       String?
+  rating           Float          @default(0)
+  totalReviews     Int            @default(0)
+  completedJobs    Int            @default(0)
+  workerSkills     WorkerSkill[]
+  serviceAreas     ServiceArea[]
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  @@index([category])
+  @@index([locationCity])
+  @@index([isVerified])
+  @@index([isAvailable])
+}
+
+model ContractorProfile {
+  id             String    @id @default(cuid())
+  userId         String    @unique
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyName    String
+  companyBio     String?   @db.Text
+  gstNumber      String?
+  licenseNumber  String?
+  city           String
+  state          String
+  pincode        String?
+  isVerified     Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Category {
+  id             String          @id @default(cuid())
+  name           String          @unique
+  hindiName      String?
+  slug           String          @unique
+  description    String?         @db.Text
+  icon           String?
+  baseDailyRate  Float?
+  isActive       Boolean         @default(true)
+  displayOrder   Int             @default(0)
+  skills         Skill[]
+  workerProfiles WorkerProfile[]
+  jobs           Job[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([slug])
+  @@index([isActive])
+}
+
+model Skill {
+  id           String        @id @default(cuid())
+  name         String        @unique
+  categoryId   String
+  category     Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  workerSkills WorkerSkill[]
+  jobSkills    JobSkill[]
+  createdAt    DateTime      @default(now())
+}
+
+model WorkerSkill {
+  id              String        @id @default(cuid())
+  workerProfileId String
+  workerProfile   WorkerProfile @relation(fields: [workerProfileId], references: [id], onDelete: Cascade)
+  skillId         String
+  skill           Skill         @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  yearsExperience Int           @default(1)
+
+  @@unique([workerProfileId, skillId])
+}
+
+model Address {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title      String   @default("Home") // Home, Work, Site
+  line1      String
+  line2      String?
+  area       String?
+  city       String
+  state      String
+  pincode    String
+  latitude   Float?
+  longitude  Float?
+  isDefault  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model ServiceArea {
+  id              String        @id @default(cuid())
+  workerProfileId String
+  workerProfile   WorkerProfile @relation(fields: [workerProfileId], references: [id], onDelete: Cascade)
+  city            String
+  pincode         String?
+  areaName        String?
+  radiusKm        Int           @default(20)
+
+  @@index([city])
+  @@index([pincode])
+}
+
+model Job {
+  id            String           @id @default(cuid())
+  title         String
+  description   String           @db.Text
+  posterId      String
+  poster        User             @relation("PostedJobs", fields: [posterId], references: [id], onDelete: Cascade)
+  categoryId    String?
+  category      Category?        @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  categoryName  String
+  jobType       JobType          @default(ONE_TIME)
+  budget        Float
+  budgetType    BudgetType       @default(FIXED)
+  city          String
+  area          String?
+  address       String
+  pincode       String
+  startDate     DateTime?
+  expectedDays  Int?             @default(1)
+  workersNeeded Int              @default(1)
+  status        JobStatus        @default(OPEN)
+  skills        JobSkill[]
+  applications  JobApplication[]
+  bookings      Booking[]
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  @@index([city])
+  @@index([status])
+  @@index([categoryName])
+}
+
+model JobSkill {
+  id      String @id @default(cuid())
+  jobId   String
+  job     Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  skillId String
+  skill   Skill  @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@unique([jobId, skillId])
+}
+
+model JobApplication {
+  id           String            @id @default(cuid())
+  jobId        String
+  job          Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  workerId     String
+  worker       User              @relation("WorkerApplications", fields: [workerId], references: [id], onDelete: Cascade)
+  proposedRate Float
+  coverNote    String?           @db.Text
+  status       ApplicationStatus @default(PENDING)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  @@unique([jobId, workerId])
+  @@index([status])
+}
+
+model Booking {
+  id              String                 @id @default(cuid())
+  bookingNumber   String                 @unique // e.g. MD-2026-0001
+  customerId      String
+  customer        User                   @relation("CustomerBookings", fields: [customerId], references: [id], onDelete: Cascade)
+  workerId        String
+  worker          User                   @relation("WorkerBookings", fields: [workerId], references: [id], onDelete: Cascade)
+  jobId           String?
+  job             Job?                   @relation(fields: [jobId], references: [id], onDelete: SetNull)
+  serviceCategory String
+  status          BookingStatus          @default(REQUESTED)
+  startDate       DateTime
+  endDate         DateTime?
+  dailyRate       Float
+  totalDays       Int                    @default(1)
+  totalAmount     Float
+  address         String
+  city            String
+  notes           String?                @db.Text
+  completionNotes String?                @db.Text
+  completedAt     DateTime?
+  statusHistory   BookingStatusHistory[]
+  reviews         Review[]
+  payments        Payment[]
+  invoices        Invoice[]
+  complaints      Complaint[]
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+
+  @@index([status])
+  @@index([customerId])
+  @@index([workerId])
+}
+
+model BookingStatusHistory {
+  id        String        @id @default(cuid())
+  bookingId String
+  booking   Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  status    BookingStatus
+  note      String?
+  changedBy String?
+  createdAt DateTime      @default(now())
+
+  @@index([bookingId])
+}
+
+model Payment {
+  id                String        @id @default(cuid())
+  bookingId         String?
+  booking           Booking?      @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+  userId            String
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount            Float
+  currency          String        @default("INR")
+  razorpayOrderId   String?       @unique
+  razorpayPaymentId String?       @unique
+  razorpaySignature String?
+  status            PaymentStatus @default(PENDING)
+  refundId          String?
+  refundAmount      Float?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  @@index([status])
+  @@index([userId])
+}
+
+model Invoice {
+  id            String    @id @default(cuid())
+  invoiceNumber String    @unique // e.g. INV-2026-0001
+  bookingId     String
+  booking       Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  amount        Float
+  taxAmount     Float     @default(0)
+  totalAmount   Float
+  pdfUrl        String?
+  issuedAt      DateTime  @default(now())
+  paidAt        DateTime?
+
+  @@index([bookingId])
+}
+
+model Review {
+  id           String   @id @default(cuid())
+  bookingId    String
+  booking      Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  reviewerId   String
+  reviewer     User     @relation("ReviewsGiven", fields: [reviewerId], references: [id], onDelete: Cascade)
+  targetUserId String
+  targetUser   User     @relation("ReviewsReceived", fields: [targetUserId], references: [id], onDelete: Cascade)
+  rating       Int      @default(5)
+  comment      String?  @db.Text
+  isModerated  Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  @@unique([bookingId, reviewerId])
+  @@index([targetUserId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  message   String   @db.Text
+  type      String   @default("SYSTEM")
+  isRead    Boolean  @default(false)
+  link      String?
+  createdAt DateTime @default(now())
+
+  @@index([userId, isRead])
+}
+
+model Conversation {
+  id        String               @id @default(cuid())
+  title     String?
+  members   ConversationMember[]
+  messages  Message[]
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+}
+
+model ConversationMember {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lastReadAt     DateTime?
+  joinedAt       DateTime     @default(now())
+
+  @@unique([conversationId, userId])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       String
+  sender         User         @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  content        String       @db.Text
+  isRead         Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+
+  @@index([conversationId])
+}
+
+model Complaint {
+  id             String          @id @default(cuid())
+  ticketNumber   String          @unique // e.g. CMP-2026-0001
+  filedById      String
+  filedBy        User            @relation("ComplaintsFiled", fields: [filedById], references: [id], onDelete: Cascade)
+  againstUserId  String?
+  againstUser    User?           @relation("ComplaintsAgainst", fields: [againstUserId], references: [id], onDelete: SetNull)
+  bookingId      String?
+  booking        Booking?        @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+  subject        String
+  description    String          @db.Text
+  status         ComplaintStatus @default(OPEN)
+  adminNotes     String?         @db.Text
+  resolution     String?         @db.Text
+  resolvedAt     DateTime?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([status])
+  @@index([filedById])
+}
+
+model VerificationRequest {
+  id           String             @id @default(cuid())
+  userId       String
+  user         User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  idType       String             // Aadhaar, Voter ID, PAN, Trade License
+  idNumber     String?
+  documentUrl  String
+  status       VerificationStatus @default(PENDING)
+  reviewNotes  String?            @db.Text
+  reviewedBy   String?
+  reviewedAt   DateTime?
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  @@index([status])
+  @@index([userId])
+}
+
+model AdminAuditLog {
+  id         String   @id @default(cuid())
+  adminId    String
+  admin      User     @relation("AdminLogs", fields: [adminId], references: [id], onDelete: Cascade)
+  action     String   // USER_SUSPEND, ROLE_CHANGE, VERIFY_APPROVE, etc.
+  targetId   String?
+  targetType String?
+  details    Json?
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+
+  @@index([adminId])
+  @@index([action])
+}
