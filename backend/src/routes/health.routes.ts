@@ -1,8 +1,14 @@
 import { Router, Request, Response } from "express";
 import { prisma } from "../config/prisma";
 import { ENV } from "../config/environment";
+import { authenticateUser, requireAdmin } from "../middleware/auth";
 
 const router = Router();
+
+// RBAC Protected Test Route
+router.get("/admin/test-rbac", authenticateUser, requireAdmin, (req: Request, res: Response) => {
+  return res.json({ success: true, message: "Welcome Admin! RBAC verified." });
+});
 
 router.get("/health", async (req: Request, res: Response) => {
   const startTime = Date.now();

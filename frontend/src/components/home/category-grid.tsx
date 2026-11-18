@@ -11,169 +11,256 @@ import {
   Flame, 
   Users, 
   HardHat,
-  ArrowRight
+  ArrowRight,
+  Search,
+  Sparkles,
+  Grid,
+  Maximize,
+  Link as LinkIcon,
+  UserPlus,
+  Wind,
+  Box,
+  Camera,
+  Sun,
+  Cpu,
+  Square,
+  Columns,
+  Droplets,
+  Home,
+  Layout,
+  Scissors,
+  ShieldAlert,
+  Truck,
+  ShieldCheck,
+  ChevronDown,
+  ChevronUp,
+  LucideIcon
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { CardSkeleton } from "@/components/ui/skeleton";
+import { fetchCategories, Category } from "@/lib/api";
 
-export interface CategoryItem {
-  id: string;
-  name: string;
-  hindiName: string;
-  slug: string;
-  icon: any;
-  activeCount: number;
-  avgDailyRate: number;
-  description: string;
-}
-
-export const POPULAR_CATEGORIES: CategoryItem[] = [
-  {
-    id: "electrician",
-    name: "Electrician",
-    hindiName: "इलेक्ट्रीशियन",
-    slug: "electrician",
-    icon: Zap,
-    activeCount: 1240,
-    avgDailyRate: 850,
-    description: "Wiring, circuit breakers, appliance repair, MCB fittings",
-  },
-  {
-    id: "plumber",
-    name: "Plumber",
-    hindiName: "प्लम्बर / नलसाज़",
-    slug: "plumber",
-    icon: Wrench,
-    activeCount: 980,
-    avgDailyRate: 800,
-    description: "Pipe fitting, leakage repair, sanitary installations, water tank",
-  },
-  {
-    id: "mason",
-    name: "Mason (Raj Mistri)",
-    hindiName: "राज मिस्त्री",
-    slug: "mason",
-    icon: Layers,
-    activeCount: 1850,
-    avgDailyRate: 950,
-    description: "Brickwork, plastering, foundation, concrete casting",
-  },
-  {
-    id: "carpenter",
-    name: "Carpenter (Badhai)",
-    hindiName: "बढ़ई",
-    slug: "carpenter",
-    icon: Hammer,
-    activeCount: 760,
-    avgDailyRate: 900,
-    description: "Furniture making, modular kitchen, door & window framing",
-  },
-  {
-    id: "painter",
-    name: "Painter",
-    hindiName: "पेंटर",
-    slug: "painter",
-    icon: Paintbrush,
-    activeCount: 1420,
-    avgDailyRate: 750,
-    description: "Interior/exterior wall painting, putty, texture, polishing",
-  },
-  {
-    id: "welder",
-    name: "Welder & Fabricator",
-    hindiName: "वेल्डर / लोहार",
-    slug: "welder",
-    icon: Flame,
-    activeCount: 530,
-    avgDailyRate: 900,
-    description: "Metal fabrication, grill gates, railing, structural welding",
-  },
-  {
-    id: "labourer",
-    name: "Daily Wage Labourer",
-    hindiName: "मजदूर (हेल्पर)",
-    slug: "labourer",
-    icon: Users,
-    activeCount: 3200,
-    avgDailyRate: 550,
-    description: "Material loading, site clearing, digging, construction helper",
-  },
-  {
-    id: "tile-marble",
-    name: "Tile & Marble Worker",
-    hindiName: "टाइल व मार्बल कारीगर",
-    slug: "tile-marble",
-    icon: HardHat,
-    activeCount: 640,
-    avgDailyRate: 1000,
-    description: "Floor tiling, granite cutting, marble polishing & fixing",
-  },
-];
+// Icon dictionary mapping backend icon string to Lucide icon component
+const ICON_MAP: Record<string, LucideIcon> = {
+  Zap,
+  Wrench,
+  Hammer,
+  Paintbrush,
+  Layers,
+  Flame,
+  Users,
+  HardHat,
+  Grid,
+  Sparkles,
+  Maximize,
+  Link: LinkIcon,
+  UserPlus,
+  Wind,
+  Box,
+  Camera,
+  Sun,
+  Cpu,
+  Square,
+  Columns,
+  Droplets,
+  Home,
+  Layout,
+  Scissors,
+  ShieldAlert,
+  Truck,
+  ShieldCheck,
+  Tool: Wrench,
+};
 
 export function CategoryGrid() {
+  const [categories, setCategories] = React.useState<Category[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [showAll, setShowAll] = React.useState(false);
+
+  React.useEffect(() => {
+    async function load() {
+      try {
+        setLoading(true);
+        const data = await fetchCategories();
+        setCategories(data);
+      } catch (err) {
+        console.error("Failed to load categories:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, []);
+
+  // Filter categories by search query (checks English name, Hindi name, or description)
+  const filteredCategories = React.useMemo(() => {
+    if (!searchQuery.trim()) return categories;
+    const q = searchQuery.toLowerCase().trim();
+    return categories.filter(
+      (c) =>
+        c.name.toLowerCase().includes(q) ||
+        (c.hindiName && c.hindiName.includes(q)) ||
+        (c.description && c.description.toLowerCase().includes(q))
+    );
+  }, [categories, searchQuery]);
+
+  // Display subset or full 32
+  const displayedCategories = showAll || searchQuery.trim()
+    ? filteredCategories
+    : filteredCategories.slice(0, 12);
+
   return (
-    <section className="py-20 bg-[#101010]">
+    <section className="py-20 bg-[#101010] border-b border-[#1c1c1c] text-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+        
+        {/* Section Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-[#D4AF37] bg-[#D4AF37]/10 border border-[#D4AF37]/30 mb-3">
-              Browse Skilled Trades
+              <Sparkles className="h-3.5 w-3.5" />
+              <span>32 Specialized Trade Categories</span>
             </div>
             <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-              Popular Service Categories
+              Browse Work by Trade &amp; Skill
             </h2>
             <p className="mt-2 text-base text-zinc-400 max-w-xl">
-              Transparent daily wage guidance, verified experience, and ready for immediate hire.
+              Explore verified craftsmen, master technicians, and construction labor organized across standard Indian workforce classifications.
             </p>
           </div>
-          <Link
-            href="/categories"
-            className="mt-4 md:mt-0 inline-flex items-center gap-1.5 text-sm font-bold text-[#D4AF37] hover:text-[#C5A028] transition-colors"
-          >
-            View all 45+ categories
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+
+          {/* Quick Category Filter Bar */}
+          <div className="w-full lg:w-72 relative">
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+            <input
+              type="text"
+              placeholder="Filter 32 categories..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full rounded-xl bg-[#181818] border border-[#262626] py-2.5 pl-10 pr-3 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-[#D4AF37]"
+            />
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {POPULAR_CATEGORIES.map((cat) => {
-            const Icon = cat.icon;
-            return (
-              <Link
-                key={cat.id}
-                href={`/workers?category=${encodeURIComponent(cat.name)}`}
-                className="group relative rounded-2xl border border-[#222222] bg-[#181818] p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-[#D4AF37] hover:bg-[#202020] hover:shadow-xl flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#252525] text-[#D4AF37] group-hover:bg-[#D4AF37] group-hover:text-black transition-colors duration-200">
-                      <Icon className="h-6 w-6" />
+        {/* Loading Skeletons */}
+        {loading ? (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            {Array.from({ length: 8 }).map((_, idx) => (
+              <CardSkeleton key={idx} />
+            ))}
+          </div>
+        ) : displayedCategories.length === 0 ? (
+          /* Empty Search State */
+          <div className="text-center py-16 p-8 rounded-2xl bg-[#141414] border border-[#222222]">
+            <p className="text-zinc-400 text-sm">
+              No categories found matching &quot;{searchQuery}&quot;.
+            </p>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setSearchQuery("")}
+              className="mt-4"
+            >
+              Clear Filter
+            </Button>
+          </div>
+        ) : (
+          /* Responsive Categories Grid */
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {displayedCategories.map((category) => {
+              const IconComponent =
+                category.icon && ICON_MAP[category.icon]
+                  ? ICON_MAP[category.icon]
+                  : HardHat;
+
+              const workerCount = category._count?.workerProfiles ?? 0;
+
+              return (
+                <Link
+                  key={category.slug}
+                  href={`/workers?category=${encodeURIComponent(category.slug)}`}
+                  className="group relative flex flex-col justify-between rounded-2xl border border-[#222222] bg-[#161616] p-5 hover:border-[#D4AF37]/50 hover:bg-[#1a1a1a] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#D4AF37]/5"
+                >
+                  <div>
+                    {/* Top Row: Icon + Badge */}
+                    <div className="flex items-start justify-between gap-3 mb-3.5">
+                      <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#202020] text-[#D4AF37] border border-[#2a2a2a] group-hover:scale-105 group-hover:border-[#D4AF37]/40 transition-all">
+                        <IconComponent className="h-5 w-5 stroke-[2.2]" />
+                      </div>
+                      {workerCount > 0 && (
+                        <span className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-bold text-emerald-400 border border-emerald-500/20">
+                          {workerCount} {workerCount === 1 ? "Worker" : "Workers"}
+                        </span>
+                      )}
                     </div>
-                    <span className="text-xs font-semibold text-zinc-500 group-hover:text-[#D4AF37] transition-colors">
-                      {cat.activeCount}+ Active
-                    </span>
+
+                    {/* Category Title & Hindi Name */}
+                    <h3 className="text-base font-bold text-white group-hover:text-[#D4AF37] transition-colors leading-snug">
+                      {category.name}
+                    </h3>
+                    {category.hindiName && (
+                      <p className="text-xs font-medium text-[#D4AF37]/90 mt-0.5">
+                        {category.hindiName}
+                      </p>
+                    )}
+
+                    {/* Short Description */}
+                    {category.description && (
+                      <p className="mt-2 text-xs text-zinc-400 line-clamp-2 leading-relaxed">
+                        {category.description}
+                      </p>
+                    )}
                   </div>
 
-                  <h3 className="text-lg font-bold text-white group-hover:text-[#D4AF37] transition-colors">
-                    {cat.name}
-                  </h3>
-                  <p className="text-xs font-medium text-[#D4AF37]/80 mb-2">
-                    {cat.hindiName}
-                  </p>
-                  <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">
-                    {cat.description}
-                  </p>
-                </div>
+                  {/* Bottom: Wage Guidance & Arrow */}
+                  <div className="mt-4 pt-3 border-t border-[#222222] flex items-center justify-between text-xs">
+                    {category.baseDailyRate ? (
+                      <span className="text-zinc-400 font-medium">
+                        Standard:{" "}
+                        <strong className="text-white font-bold">
+                          ₹{category.baseDailyRate}
+                        </strong>
+                        <span className="text-[10px] text-zinc-500"> /day</span>
+                      </span>
+                    ) : (
+                      <span className="text-zinc-500">Standard Daily Rate</span>
+                    )}
 
-                <div className="mt-6 pt-4 border-t border-[#262626] flex items-center justify-between text-xs">
-                  <span className="text-zinc-500 font-medium">Avg. Daily Wage</span>
-                  <span className="font-bold text-white group-hover:text-[#D4AF37] transition-colors">
-                    ₹{cat.avgDailyRate} / day
-                  </span>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+                    <span className="inline-flex items-center text-xs font-semibold text-[#D4AF37] group-hover:translate-x-1 transition-transform">
+                      Hire
+                      <ArrowRight className="h-3 w-3 ml-1" />
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        )}
+
+        {/* View All 32 Categories Toggle Button */}
+        {!searchQuery && categories.length > 12 && (
+          <div className="mt-12 text-center">
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => setShowAll(!showAll)}
+              className="border-[#333333] bg-[#181818] text-white hover:border-[#D4AF37] hover:bg-[#202020] font-bold"
+              rightIcon={
+                showAll ? (
+                  <ChevronUp className="h-4 w-4 text-[#D4AF37]" />
+                ) : (
+                  <ChevronDown className="h-4 w-4 text-[#D4AF37]" />
+                )
+              }
+            >
+              {showAll
+                ? "Show Less Categories"
+                : `View All ${categories.length} Trade Categories`}
+            </Button>
+          </div>
+        )}
+
       </div>
     </section>
   );

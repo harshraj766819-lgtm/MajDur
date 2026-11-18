@@ -8,11 +8,16 @@ const alertVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-slate-50 border-slate-200 text-slate-800",
-        info: "bg-blue-50 border-blue-200 text-blue-900 [&>svg]:text-blue-600",
-        success: "bg-emerald-50 border-emerald-200 text-emerald-900 [&>svg]:text-emerald-600",
-        warning: "bg-amber-50 border-amber-200 text-amber-900 [&>svg]:text-amber-600",
-        destructive: "bg-red-50 border-red-200 text-red-900 [&>svg]:text-red-600",
+        default:
+          "bg-[#1c1c1c] border-[#2e2e2e] text-zinc-200 light:bg-slate-50 light:border-slate-200 light:text-slate-800",
+        info:
+          "bg-blue-950/30 border-blue-800/40 text-blue-200 [&>svg]:text-blue-400 light:bg-blue-50 light:border-blue-200 light:text-blue-900 light:[&>svg]:text-blue-600",
+        success:
+          "bg-emerald-950/30 border-emerald-800/40 text-emerald-200 [&>svg]:text-emerald-400 light:bg-emerald-50 light:border-emerald-200 light:text-emerald-900 light:[&>svg]:text-emerald-600",
+        warning:
+          "bg-amber-950/30 border-amber-800/40 text-amber-200 [&>svg]:text-amber-400 light:bg-amber-50 light:border-amber-200 light:text-amber-900 light:[&>svg]:text-amber-600",
+        destructive:
+          "bg-red-950/30 border-red-800/40 text-red-200 [&>svg]:text-red-400 light:bg-red-50 light:border-red-200 light:text-red-900 light:[&>svg]:text-red-600",
       },
     },
     defaultVariants: {
@@ -60,4 +65,3 @@ export function Alert({
     </div>
   );
 }
-

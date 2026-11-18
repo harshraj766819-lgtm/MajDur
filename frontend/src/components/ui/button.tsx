@@ -4,29 +4,31 @@ import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 select-none cursor-pointer",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent disabled:pointer-events-none disabled:opacity-50 select-none cursor-pointer active:scale-[0.98]",
   {
     variants: {
       variant: {
         primary:
-          "bg-brand-500 text-white shadow-sm hover:bg-brand-600 active:bg-brand-700 active:scale-[0.99]",
+          "bg-[#D4AF37] text-black shadow-md shadow-[#D4AF37]/20 hover:bg-[#C5A028] hover:shadow-lg hover:shadow-[#D4AF37]/30 border border-amber-300/30",
+        default:
+          "bg-[#D4AF37] text-black shadow-md shadow-[#D4AF37]/20 hover:bg-[#C5A028] hover:shadow-lg hover:shadow-[#D4AF37]/30 border border-amber-300/30",
         secondary:
-          "bg-slate-900 text-white shadow-sm hover:bg-slate-800 active:bg-slate-950",
+          "bg-[#222222] text-zinc-100 border border-[#333333] hover:bg-[#2a2a2a] hover:text-white light:bg-slate-900 light:text-white light:hover:bg-slate-800",
         outline:
-          "border border-slate-300 bg-white text-slate-700 shadow-sm hover:bg-slate-50 hover:text-slate-900",
+          "border border-[#333333] bg-transparent text-zinc-200 hover:border-[#D4AF37] hover:text-[#D4AF37] hover:bg-[#D4AF37]/5 light:border-slate-300 light:text-slate-700 light:hover:border-[#D4AF37] light:hover:bg-amber-50/50",
         ghost:
-          "text-slate-700 hover:bg-slate-100 hover:text-slate-900",
+          "text-zinc-300 hover:bg-white/5 hover:text-white light:text-slate-700 light:hover:bg-slate-100 light:hover:text-slate-900",
         danger:
-          "bg-red-600 text-white shadow-sm hover:bg-red-700 active:bg-red-800",
-        link:
-          "text-brand-600 underline-offset-4 hover:underline p-0 h-auto",
+          "bg-red-600 text-white shadow-sm hover:bg-red-700 active:bg-red-800 border border-red-500/20",
         success:
-          "bg-emerald-600 text-white shadow-sm hover:bg-emerald-700",
+          "bg-emerald-600 text-white shadow-sm hover:bg-emerald-700 active:bg-emerald-800 border border-emerald-500/20",
+        link:
+          "text-[#D4AF37] underline-offset-4 hover:underline p-0 h-auto font-medium active:scale-100",
       },
       size: {
-        sm: "h-9 rounded-md px-3 text-xs gap-1.5",
+        sm: "h-9 rounded-lg px-3 text-xs gap-1.5",
         md: "h-11 px-4 py-2 text-sm gap-2",
-        lg: "h-12 rounded-xl px-6 text-base gap-2.5 font-semibold",
+        lg: "h-12 rounded-xl px-6 text-base gap-2.5 font-bold",
         icon: "h-10 w-10 p-0 rounded-lg",
       },
       fullWidth: {
@@ -72,7 +74,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {isLoading ? (
-          <Loader2 className="h-4 w-4 animate-spin mr-2" />
+          <Loader2 className="h-4 w-4 animate-spin mr-2 shrink-0" />
         ) : (
           leftIcon && <span className="inline-flex shrink-0">{leftIcon}</span>
         )}
@@ -87,4 +89,3 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button";
 
 export { Button, buttonVariants };
-

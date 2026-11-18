@@ -1,0 +1,122 @@
+[
+  {
+    "route": "/",
+    "id": "homepage",
+    "viewport": "desktop-1920x1080",
+    "resolution": "1920x1080",
+    "device": "Desktop Full HD",
+    "filename": "homepage-desktop-1920x1080.png",
+    "filepath": "D:\\MajDur\\test-evidence\\phase8-stage1-final-qa\\homepage-desktop-1920x1080.png",
+    "sizeBytes": 160361,
+    "status": "CAPTURED",
+    "loadTimeMs": 191
+  },
+  {
+    "route": "/",
+    "id": "homepage",
+    "viewport": "laptop-1366x768",
+    "resolution": "1366x768",
+    "device": "Laptop Widescreen",
+    "filename": "homepage-laptop-1366x768.png",
+    "filepath": "D:\\MajDur\\test-evidence\\phase8-stage1-final-qa\\homepage-laptop-1366x768.png",
+    "sizeBytes": 130218,
+    "status": "CAPTURED",
+    "loadTimeMs": 191
+  },
+  {
+    "route": "/",
+    "id": "homepage",
+    "viewport": "tablet-768x1024",
+    "resolution": "768x1024",
+    "device": "Tablet Portrait",
+    "filename": "homepage-tablet-768x1024.png",
+    "filepath": "D:\\MajDur\\test-evidence\\phase8-stage1-final-qa\\homepage-tablet-768x1024.png",
+    "sizeBytes": 114286,
+    "status": "CAPTURED",
+    "loadTimeMs": 191
+  },
+  {
+    "route": "/",
+    "id": "homepage",
+    "viewport": "mobile-390x844",
+    "resolution": "390x844",
+    "device": "Mobile (iPhone 14 / Modern)",
+    "filename": "homepage-mobile-390x844.png",
+    "filepath": "D:\\MajDur\\test-evidence\\phase8-stage1-final-qa\\homepage-mobile-390x844.png",
+    "sizeBytes": 49741,
+    "status": "CAPTURED",
+    "loadTimeMs": 191
+  },
+  {
+    "route": "/",
+    "id": "homepage",
+    "viewport": "small-mobile-360x800",
+    "resolution": "360x800",
+    "device": "Small Mobile (Android Compact)",
+    "filename": "homepage-small-mobile-360x800.png",
+    "filepath": "D:\\MajDur\\test-evidence\\phase8-stage1-final-qa\\homepage-small-mobile-360x800.png",
+    "sizeBytes": 45428,
+    "status": "CAPTURED",
+    "loadTimeMs": 191
+  },
+  {
+    "route": "/dashboard/customer/bookings",
+    "id": "customer-bookings",
+    "viewport": "desktop-1920x1080",
+    "resolution": "1920x1080",
+    "device": "Desktop Full HD",
+    "filename": "customer-bookings-desktop-1920x1080.png",
+    "filepath": "D:\\MajDur\\test-evidence\\phase8-stage1-final-qa\\customer-bookings-desktop-1920x1080.png",
+    "sizeBytes": 38536,
+    "status": "CAPTURED",
+    "loadTimeMs": 76
+  },
+  {
+    "route": "/dashboard/customer/bookings",
+    "id": "customer-bookings",
+    "viewport": "laptop-1366x768",
+    "resolution": "1366x768",
+    "device": "Laptop Widescreen",
+    "filename": "customer-bookings-laptop-1366x768.png",
+    "filepath": "D:\\MajDur\\test-evidence\\phase8-stage1-final-qa\\customer-bookings-laptop-1366x768.png",
+    "sizeBytes": 33407,
+    "status": "CAPTURED",
+    "loadTimeMs": 76
+  },
+  {
+    "route": "/dashboard/customer/bookings",
+    "id": "customer-bookings",
+    "viewport": "tablet-768x1024",
+    "resolution": "768x1024",
+    "device": "Tablet Portrait",
+    "filename": "customer-bookings-tablet-768x1024.png",
+    "filepath": "D:\\MajDur\\test-evidence\\phase8-stage1-final-qa\\customer-bookings-tablet-768x1024.png",
+    "sizeBytes": 25144,
+    "status": "CAPTURED",
+    "loadTimeMs": 76
+  },
+  {
+    "route": "/dashboard/customer/bookings",
+    "id": "customer-bookings",
+    "viewport": "mobile-390x844",
+    "resolution": "390x844",
+    "device": "Mobile (iPhone 14 / Modern)",
+    "filename": "customer-bookings-mobile-390x844.png",
+    "filepath": "D:\\MajDur\\test-evidence\\phase8-stage1-final-qa\\customer-bookings-mobile-390x844.png",
+    "sizeBytes": 11009,
+    "status": "CAPTURED",
+    "loadTimeMs": 76
+  },
+  {
+    "route": "/dashboard/customer/bookings",
+    "id": "customer-bookings",
+    "viewport": "small-mobile-360x800",
+    "resolution": "360x800",
+    "device": "Small Mobile (Android Compact)",
+    "filename": "customer-bookings-small-mobile-360x800.png",
+    "filepath": "D:\\MajDur\\test-evidence\\phase8-stage1-final-qa\\customer-bookings-small-mobile-360x800.png",
+    "sizeBytes": 10098,
+    "status": "CAPTURED",
+    "loadTimeMs": 76
+  }
+]

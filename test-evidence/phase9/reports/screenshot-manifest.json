@@ -1,0 +1,252 @@
+[
+  {
+    "route": "/dashboard/customer/payments",
+    "viewport": "desktop-1920x1080",
+    "dimensions": "1920x1080",
+    "category": "payments",
+    "file": "customer-payments-desktop-1920x1080.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\payments\\customer-payments-desktop-1920x1080.png",
+    "size": 39017,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/dashboard/customer/payments",
+    "viewport": "laptop-1366x768",
+    "dimensions": "1366x768",
+    "category": "payments",
+    "file": "customer-payments-laptop-1366x768.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\payments\\customer-payments-laptop-1366x768.png",
+    "size": 33812,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/dashboard/customer/payments",
+    "viewport": "tablet-768x1024",
+    "dimensions": "768x1024",
+    "category": "payments",
+    "file": "customer-payments-tablet-768x1024.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\payments\\customer-payments-tablet-768x1024.png",
+    "size": 25625,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/dashboard/customer/payments",
+    "viewport": "mobile-390x844",
+    "dimensions": "390x844",
+    "category": "payments",
+    "file": "customer-payments-mobile-390x844.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\payments\\customer-payments-mobile-390x844.png",
+    "size": 11546,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/dashboard/customer/payments",
+    "viewport": "small-mobile-360x800",
+    "dimensions": "360x800",
+    "category": "payments",
+    "file": "customer-payments-small-mobile-360x800.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\payments\\customer-payments-small-mobile-360x800.png",
+    "size": 10787,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/dashboard/customer/bookings",
+    "viewport": "desktop-1920x1080",
+    "dimensions": "1920x1080",
+    "category": "bookings",
+    "file": "customer-bookings-desktop-1920x1080.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\bookings\\customer-bookings-desktop-1920x1080.png",
+    "size": 38723,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/dashboard/customer/bookings",
+    "viewport": "laptop-1366x768",
+    "dimensions": "1366x768",
+    "category": "bookings",
+    "file": "customer-bookings-laptop-1366x768.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\bookings\\customer-bookings-laptop-1366x768.png",
+    "size": 33534,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/dashboard/customer/bookings",
+    "viewport": "tablet-768x1024",
+    "dimensions": "768x1024",
+    "category": "bookings",
+    "file": "customer-bookings-tablet-768x1024.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\bookings\\customer-bookings-tablet-768x1024.png",
+    "size": 25357,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/dashboard/customer/bookings",
+    "viewport": "mobile-390x844",
+    "dimensions": "390x844",
+    "category": "bookings",
+    "file": "customer-bookings-mobile-390x844.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\bookings\\customer-bookings-mobile-390x844.png",
+    "size": 11209,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/dashboard/customer/bookings",
+    "viewport": "small-mobile-360x800",
+    "dimensions": "360x800",
+    "category": "bookings",
+    "file": "customer-bookings-small-mobile-360x800.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\bookings\\customer-bookings-small-mobile-360x800.png",
+    "size": 10190,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/dashboard/worker/earnings",
+    "viewport": "desktop-1920x1080",
+    "dimensions": "1920x1080",
+    "category": "earnings",
+    "file": "worker-earnings-desktop-1920x1080.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\earnings\\worker-earnings-desktop-1920x1080.png",
+    "size": 40341,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/dashboard/worker/earnings",
+    "viewport": "laptop-1366x768",
+    "dimensions": "1366x768",
+    "category": "earnings",
+    "file": "worker-earnings-laptop-1366x768.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\earnings\\worker-earnings-laptop-1366x768.png",
+    "size": 35048,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/dashboard/worker/earnings",
+    "viewport": "tablet-768x1024",
+    "dimensions": "768x1024",
+    "category": "earnings",
+    "file": "worker-earnings-tablet-768x1024.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\earnings\\worker-earnings-tablet-768x1024.png",
+    "size": 26958,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/dashboard/worker/earnings",
+    "viewport": "mobile-390x844",
+    "dimensions": "390x844",
+    "category": "earnings",
+    "file": "worker-earnings-mobile-390x844.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\earnings\\worker-earnings-mobile-390x844.png",
+    "size": 12798,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/dashboard/worker/earnings",
+    "viewport": "small-mobile-360x800",
+    "dimensions": "360x800",
+    "category": "earnings",
+    "file": "worker-earnings-small-mobile-360x800.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\earnings\\worker-earnings-small-mobile-360x800.png",
+    "size": 12091,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/workers",
+    "viewport": "desktop-1920x1080",
+    "dimensions": "1920x1080",
+    "category": "regression",
+    "file": "workers-directory-desktop-1920x1080.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\regression\\workers-directory-desktop-1920x1080.png",
+    "size": 63939,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/workers",
+    "viewport": "laptop-1366x768",
+    "dimensions": "1366x768",
+    "category": "regression",
+    "file": "workers-directory-laptop-1366x768.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\regression\\workers-directory-laptop-1366x768.png",
+    "size": 58328,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/workers",
+    "viewport": "tablet-768x1024",
+    "dimensions": "768x1024",
+    "category": "regression",
+    "file": "workers-directory-tablet-768x1024.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\regression\\workers-directory-tablet-768x1024.png",
+    "size": 51048,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/workers",
+    "viewport": "mobile-390x844",
+    "dimensions": "390x844",
+    "category": "regression",
+    "file": "workers-directory-mobile-390x844.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\regression\\workers-directory-mobile-390x844.png",
+    "size": 33936,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/workers",
+    "viewport": "small-mobile-360x800",
+    "dimensions": "360x800",
+    "category": "regression",
+    "file": "workers-directory-small-mobile-360x800.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\regression\\workers-directory-small-mobile-360x800.png",
+    "size": 32545,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/",
+    "viewport": "desktop-1920x1080",
+    "dimensions": "1920x1080",
+    "category": "regression",
+    "file": "homepage-desktop-1920x1080.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\regression\\homepage-desktop-1920x1080.png",
+    "size": 162033,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/",
+    "viewport": "laptop-1366x768",
+    "dimensions": "1366x768",
+    "category": "regression",
+    "file": "homepage-laptop-1366x768.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\regression\\homepage-laptop-1366x768.png",
+    "size": 131027,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/",
+    "viewport": "tablet-768x1024",
+    "dimensions": "768x1024",
+    "category": "regression",
+    "file": "homepage-tablet-768x1024.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\regression\\homepage-tablet-768x1024.png",
+    "size": 115205,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/",
+    "viewport": "mobile-390x844",
+    "dimensions": "390x844",
+    "category": "regression",
+    "file": "homepage-mobile-390x844.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\regression\\homepage-mobile-390x844.png",
+    "size": 50245,
+    "status": "CAPTURED"
+  },
+  {
+    "route": "/",
+    "viewport": "small-mobile-360x800",
+    "dimensions": "360x800",
+    "category": "regression",
+    "file": "homepage-small-mobile-360x800.png",
+    "path": "D:\\Majdur\\test-evidence\\phase9\\regression\\homepage-small-mobile-360x800.png",
+    "size": 46243,
+    "status": "CAPTURED"
+  }
+]

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ToastProvider } from "@/components/ui/toast-provider";
+import { AuthProvider } from "@/lib/auth-context";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -27,10 +30,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark scroll-smooth">
-      <body className="min-h-screen flex flex-col bg-[#101010] text-white antialiased selection:bg-[#D4AF37] selection:text-black">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
+      <body className="min-h-screen flex flex-col bg-majdur-bg text-majdur-textPrimary antialiased selection:bg-[#D4AF37] selection:text-black transition-colors duration-200">
+        <ThemeProvider>
+          <ToastProvider>
+            <AuthProvider>
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </AuthProvider>
+          </ToastProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

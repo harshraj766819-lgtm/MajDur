@@ -1,6 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
-import { Hammer, ShieldCheck, HeartHandshake, Phone, Mail, MapPin, Code2 } from "lucide-react";
+import { Hammer, ShieldCheck, HeartHandshake, Phone, Mail, MapPin, Code2, Globe, Share2 } from "lucide-react";
 
 export function Footer() {
   return (
@@ -127,6 +127,48 @@ export function Footer() {
                 <span>New Delhi • Mumbai • Bengaluru • Patna</span>
               </li>
             </ul>
+
+            <div className="pt-2">
+              <span className="text-xs uppercase font-bold text-zinc-500 block mb-2">Connect With Us</span>
+              <div className="flex items-center gap-2.5">
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#181818] border border-[#2a2a2a] text-zinc-400 hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all"
+                >
+                  <span className="text-xs font-bold">in</span>
+                </a>
+                <a
+                  href="https://x.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Twitter X"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#181818] border border-[#2a2a2a] text-zinc-400 hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all"
+                >
+                  <span className="text-xs font-bold">𝕏</span>
+                </a>
+                <a
+                  href="https://youtube.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="YouTube"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#181818] border border-[#2a2a2a] text-zinc-400 hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all"
+                >
+                  <span className="text-xs font-bold">▶</span>
+                </a>
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#181818] border border-[#2a2a2a] text-zinc-400 hover:text-[#D4AF37] hover:border-[#D4AF37] transition-all"
+                >
+                  <span className="text-xs font-bold">IG</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
